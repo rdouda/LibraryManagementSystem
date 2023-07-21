@@ -1,6 +1,45 @@
 package com.rdouda.librarymanagementsystem;
 
 public class SQLQueries {
+    // DATABASE
+    public static final String BOOKS_TABLE =
+            "CREATE TABLE books (" +
+            "book_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "title TEXT NOT NULL," +
+            "author TEXT NOT NULL," +
+            "isbn TEXT UNIQUE NOT NULL," +
+            "is_taken INTEGER NOT NULL DEFAULT 0);";
+
+    public static final String PATRON_TABLE =
+            "CREATE TABLE patrons (" +
+            "patron_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "name TEXT NOT NULL," +
+            "contact_number TEXT NOT NULL," +
+            "membership_id TEXT UNIQUE NOT NULL);";
+
+    public static final String BORROWINGS_TABLE =
+            "CREATE TABLE borrowings (" +
+            "borrowing_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "book_id INTEGER NOT NULL," +
+            "patron_id INTEGER NOT NULL," +
+            "borrow_date DATE NOT NULL," +
+            "due_date DATE NOT NULL," +
+            "return_date DATE," +
+            "FOREIGN KEY (book_id) REFERENCES books(book_id)," +
+            "FOREIGN KEY (patron_id) REFERENCES patrons(patron_id));";
+
+    public static final String PREVENT_PATRON_DELETION =
+            "CREATE TRIGGER prevent_patron_deletion" +
+            "   BEFORE DELETE ON patrons" +
+            "   FOR EACH ROW" +
+            "   BEGIN" +
+            "       SELECT" +
+            "           CASE" +
+            "               WHEN EXISTS (SELECT 1 FROM borrowings WHERE patron_id = OLD.patron_id AND return_date IS NULL)" +
+            "               THEN RAISE (ABORT, 'Cannot delete patron with active borrowings')" +
+            "           END;" +
+            "END;";
+
     // BOOK SQL QUERIES
     public static final String GET_BOOK = "SELECT * FROM books WHERE isbn = ?";
     public static final String ADD_BOOK = "INSERT INTO books (title, author, isbn, is_taken) VALUES (?, ?, ?, ?)";

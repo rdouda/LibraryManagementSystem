@@ -10,6 +10,7 @@
         <TextField fx:id="isbnField" promptText="ISBN" />
 
         <Button onAction="#addBook" text="Add Book" />
+        <Button onAction="#removeBook" text="Remove Book" />
 
         <Label fx:id="messageLabel" />
     </VBox>

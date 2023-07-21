@@ -47,11 +47,25 @@ public class ApplicationController {
             String bookAuthor = authorField.getText();
             String isbn = isbnField.getText();
             try{
-                DatabaseManager.addBook(bookTitle, bookAuthor, isbn, 0);
-                messageLabel.setText("Book added successfully.");
+                if(DatabaseManager.addBook(bookTitle, bookAuthor, isbn, 0))
+                    messageLabel.setText("Book added successfully.");
+                else
+                    messageLabel.setText("Book already exists.");
             }catch (SQLException sqlException){
                 messageLabel.setText("Error adding book." + sqlException.getMessage());
             }
+        }
+    }
+
+    public void removeBook(ActionEvent actionEvent) {
+        try{
+            if(DatabaseManager.removeBook(isbnField.getText()))
+                messageLabel.setText("Book removed: " + isbnField.getText());
+            else
+                messageLabel.setText("Book not found: " + isbnField.getText());
+        }catch (SQLException sqlException){
+            messageLabel.setText("Error removing book: " + isbnField.getText());
+            System.out.println("SQL Error: " + sqlException.getMessage());
         }
     }
 }

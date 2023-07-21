@@ -3,9 +3,7 @@ package com.rdouda.librarymanagementsystem;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class Main extends Application {
@@ -19,6 +17,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        DatabaseManager.database();
         launch();
     }
 }

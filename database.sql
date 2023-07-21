@@ -3,7 +3,6 @@ CREATE TABLE books (
     title TEXT NOT NULL,
     author TEXT NOT NULL,
     isbn TEXT UNIQUE NOT NULL,
-    quantity INTEGER NOT NULL DEFAULT 0,
     is_taken INTEGER NOT NULL DEFAULT 0
 );
 

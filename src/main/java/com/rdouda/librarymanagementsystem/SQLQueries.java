@@ -1,8 +1,31 @@
 package com.rdouda.librarymanagementsystem;
 
 public class SQLQueries {
+    // BOOK SQL QUERIES
     public static final String GET_BOOK = "SELECT * FROM books WHERE isbn = ?";
-    public static final String ADD_BOOK = "INSERT INTO books (title, author, isbn, quantity) VALUES (?, ?, ?, ?)";
-    public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET quantity = ? WHERE isbn = ?";
+    public static final String ADD_BOOK = "INSERT INTO books (title, author, isbn, is_taken) VALUES (?, ?, ?, ?)";
     public static final String REMOVE_BOOK = "DELETE FROM books WHERE isbn = ?";
+
+    // BORROWINGS SQL QUERIES
+    public static final String GET_BORROWINGS_BY_PATRON_ID = "SELECT * FROM borrowings WHERE patron_id = ?";
+    public static final String GET_ALL_BORROWINGS = "SELECT * FROM borrowings";
+    public static final String GET_BORROWINGS_BY_BOOK_ID = "SELECT * FROM borrowings WHERE book_id = ?";
+    public static final String REMOVE_BORROWING_BY_PATRON_AND_BOOK = "DELETE FROM borrowings WHERE book_id = ? AND patron_id = ?";
+    public static final String REMOVE_ALL_BORROWINGS_BY_PATRON = "DELETE FROM borrowings WHERE patron_id = ?";
+    public static final String ADD_BORROWING = "INSERT INTO borrowings (book_id, patron_id, borrow_date, due_date, return_date) VALUES (?, ?, ?, ?, ?)";
+    public static final String UPDATE_BORROWING_RETURN_DATE = "UPDATE borrowings SET return_date = ? WHERE borrowing_id = ?";
+    public static final String GET_OVERDUE_BORROWINGS = "SELECT * FROM borrowings WHERE due_date < ? AND return_date IS NULL";
+    public static final String GET_BORROWINGS_BY_RETURN_DATE_RANGE = "SELECT * FROM borrowings WHERE return_date BETWEEN ? AND ?";
+    public static final String GET_BORROWINGS_WITH_DETAILS = "SELECT b.*, bk.title, bk.author, p.name AS patron_name FROM borrowings b JOIN books bk ON b.book_id = bk.book_id JOIN patrons p ON b.patron_id = p.patron_id";
+
+    // Create a Patron
+    public static final String ADD_PATRON = "INSERT INTO patrons (name, email, phone) VALUES (?, ?, ?)";
+    public static final String GET_ALL_PATRONS = "SELECT * FROM patrons";
+    public static final String GET_PATRON_BY_ID = "SELECT * FROM patrons WHERE patron_id = ?";
+    public static final String UPDATE_PATRON = "UPDATE patrons SET name = ?, email = ?, phone = ? WHERE patron_id = ?";
+    public static final String DELETE_PATRON_BY_ID = "DELETE FROM patrons WHERE patron_id = ?";
+    public static final String GET_PATRONS_BY_NAME = "SELECT * FROM patrons WHERE name LIKE ?";
+    public static final String GET_PATRONS_BY_EMAIL = "SELECT * FROM patrons WHERE email = ?";
+    public static final String GET_OVERDUE_PATRONS = "SELECT p.* FROM patrons p JOIN borrowings b ON p.patron_id = b.patron_id WHERE b.due_date < ? AND b.return_date IS NULL";
+    public static final String GET_PATRON_COUNT = "SELECT COUNT(*) AS patron_count FROM patrons";
 }

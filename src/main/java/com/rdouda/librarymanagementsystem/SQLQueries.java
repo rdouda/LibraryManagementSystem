@@ -44,6 +44,8 @@ public class SQLQueries {
     public static final String GET_BOOK = "SELECT * FROM books WHERE isbn = ?";
     public static final String ADD_BOOK = "INSERT INTO books (title, author, isbn, is_taken) VALUES (?, ?, ?, ?)";
     public static final String REMOVE_BOOK = "DELETE FROM books WHERE isbn = ?";
+    public static final String GET_BOOKS = "SELECT * FROM books;";
+    public static final String REMOVE_ALL_BOOKS = "DELETE FROM books;";
 
     // BORROWINGS SQL QUERIES
     public static final String GET_BORROWINGS_BY_PATRON_ID = "SELECT * FROM borrowings WHERE patron_id = ?";

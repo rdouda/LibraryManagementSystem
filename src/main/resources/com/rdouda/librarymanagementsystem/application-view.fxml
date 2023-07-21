@@ -11,6 +11,7 @@
 
         <Button onAction="#addBook" text="Add Book" />
         <Button onAction="#removeBook" text="Remove Book" />
+      <Button mnemonicParsing="false" onAction="#getBooks" text="Button" />
 
         <Label fx:id="messageLabel" />
     </VBox>

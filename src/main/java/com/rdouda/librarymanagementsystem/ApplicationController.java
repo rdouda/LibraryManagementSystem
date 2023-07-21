@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ApplicationController {
     @FXML
@@ -46,8 +47,12 @@ public class ApplicationController {
             String bookTitle = titleField.getText();
             String bookAuthor = authorField.getText();
             String isbn = isbnField.getText();
+            Book book = new Book();
+            book.setTitle(bookTitle);
+            book.setAuthor(bookAuthor);
+            book.setIsbn(isbn);
             try{
-                if(DatabaseManager.addBook(bookTitle, bookAuthor, isbn, 0))
+                if(DatabaseManager.addBook(book))
                     messageLabel.setText("Book added successfully.");
                 else
                     messageLabel.setText("Book already exists.");
@@ -66,6 +71,17 @@ public class ApplicationController {
         }catch (SQLException sqlException){
             messageLabel.setText("Error removing book: " + isbnField.getText());
             System.out.println("SQL Error: " + sqlException.getMessage());
+        }
+    }
+
+    public void getBooks(ActionEvent actionEvent) {
+        try {
+            ArrayList<Book> books = DatabaseManager.getBooks();
+            for(Book book : books){
+                System.out.println(book);
+            }
+        } catch (SQLException sqlException){
+            System.out.println("SQL ERROR: " + sqlException.getMessage());
         }
     }
 }

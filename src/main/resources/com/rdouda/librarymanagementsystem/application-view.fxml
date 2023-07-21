@@ -8,7 +8,6 @@
         <TextField fx:id="titleField" promptText="Book Title" />
         <TextField fx:id="authorField" promptText="Author" />
         <TextField fx:id="isbnField" promptText="ISBN" />
-        <TextField fx:id="quantityField" promptText="Quantity" />
 
         <Button onAction="#addBook" text="Add Book" />
 

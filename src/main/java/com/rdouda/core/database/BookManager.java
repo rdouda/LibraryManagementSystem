@@ -9,9 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class BookManager {
-    public static Book getBook(String bookIsbn) throws SQLException {
+    public static Book getBook(Book book) throws SQLException {
         PreparedStatement getBookStatement = DatabaseManager.connection.prepareStatement(SQLQueries.GET_BOOK);
-        getBookStatement.setString(1, bookIsbn);
+        getBookStatement.setString(1, book.getIsbn());
         ResultSet resultSet = getBookStatement.executeQuery();
         if (resultSet.next()){
             String title = resultSet.getString("title");
@@ -22,21 +22,19 @@ public class BookManager {
         return null;
     }
 
-    public static boolean addBook(Book book) throws SQLException {
+    public static void addBook(Book book) throws SQLException {
         PreparedStatement addBookStatement = DatabaseManager.connection.prepareStatement(SQLQueries.ADD_BOOK);
         addBookStatement.setString(1, book.getTitle());
         addBookStatement.setString(2, book.getAuthor());
         addBookStatement.setString(3, book.getIsbn());
         addBookStatement.setInt(4, book.getIsTaken());
         int rowsAffected = addBookStatement.executeUpdate();
-        return rowsAffected > 0;
     }
 
-    public static boolean removeBook(String isbn) throws SQLException {
+    public static void removeBook(Book book) throws SQLException {
         PreparedStatement removeBookStatement = DatabaseManager.connection.prepareStatement(SQLQueries.REMOVE_BOOK);
-        removeBookStatement.setString(1, isbn);
+        removeBookStatement.setString(1, book.getIsbn());
         int rowsAffected = removeBookStatement.executeUpdate();
-        return rowsAffected > 0;
     }
 
     public static ArrayList<Book> getBooks() throws SQLException {

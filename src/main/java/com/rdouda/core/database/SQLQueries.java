@@ -60,11 +60,12 @@ public class SQLQueries {
     public static final String GET_BORROWINGS_WITH_DETAILS = "SELECT b.*, bk.title, bk.author, p.name AS patron_name FROM borrowings b JOIN books bk ON b.book_id = bk.book_id JOIN patrons p ON b.patron_id = p.patron_id";
 
     // PATRON QUERIES
-    public static final String ADD_PATRON = "INSERT INTO patrons (name, contact_number, phone) VALUES (?, ?, ?)";
+    public static final String ADD_PATRON = "INSERT INTO patrons (name, contact_number, membership_id) VALUES (?, ?, ?)";
     public static final String GET_ALL_PATRONS = "SELECT * FROM patrons";
+    public static final String REMOVE_ALL_PATRONS = "DELETE FROM patrons;";
     public static final String GET_PATRON_BY_MEMBERSHIP_ID = "SELECT * FROM patrons WHERE membership_id = ?";
     public static final String UPDATE_PATRON = "UPDATE patrons SET name = ?, contact_number = ?, phone = ? WHERE patron_id = ?";
-    public static final String DELETE_PATRON_BY_ID = "DELETE FROM patrons WHERE patron_id = ?";
+    public static final String DELETE_PATRON_BY_MEMBERSHIP_ID = "DELETE FROM patrons WHERE membership_id = ?";
     public static final String GET_PATRONS_BY_NAME = "SELECT * FROM patrons WHERE name LIKE ?";
     public static final String GET_PATRONS_BY_CONTACT_NUMBER = "SELECT * FROM patrons WHERE contact_number = ?";
     public static final String GET_OVERDUE_PATRONS = "SELECT p.* FROM patrons p JOIN borrowings b ON p.patron_id = b.patron_id WHERE b.due_date < ? AND b.return_date IS NULL";

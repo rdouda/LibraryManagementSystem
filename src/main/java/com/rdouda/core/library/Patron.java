@@ -21,6 +21,10 @@ public class Patron {
 
     }
 
+    @Override
+    public String toString(){
+        return this.name;
+    }
     public int getPatronId() {
         return patronId;
     }

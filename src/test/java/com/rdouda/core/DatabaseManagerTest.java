@@ -2,10 +2,13 @@ package com.rdouda.core;
 
 import com.rdouda.core.database.BookManager;
 import com.rdouda.core.database.DatabaseManager;
+import com.rdouda.core.database.PatronManager;
 import com.rdouda.core.library.Book;
+import com.rdouda.core.library.Patron;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,11 +26,27 @@ class DatabaseManagerTest {
         } catch (SQLException sqlException){
             System.out.println(sqlException.getMessage());
             fail("An unexpected SQLException occured");
-        } finally {
-            DatabaseManager.closeConnection();
         }
     }
-
+    @Test
+    void getBook() {
+        DatabaseManager.database();
+        String isbn = "67896777";
+        Book book = new Book();
+        book.setIsbn("345555532");
+        try {
+            Book bookFound = BookManager.getBook(book);
+            if (bookFound == null)
+                System.out.println("Book does not exist.");
+            else
+                System.out.println(bookFound);
+            assert true;
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+            System.out.println("An unexpected SQLException occured.");
+            fail();
+        }
+    }
     @Test
     void removeAllBooks(){
         DatabaseManager.database();
@@ -38,27 +57,36 @@ class DatabaseManagerTest {
         } catch (SQLException sqlException){
             System.out.println(sqlException.getMessage());
             fail("An unexpected SQLException occured");
-        } finally {
-            DatabaseManager.closeConnection();
+        }
+    }
+    @Test
+    void closeDatabaseConnection(){
+        DatabaseManager.closeConnection();
+    }
+
+    @Test
+    void addPatron(){
+        DatabaseManager.database();
+        try{
+            PatronManager.addPatron(new Patron("Rayen Raddaoui", "55607817", "98734583"));
+            PatronManager.addPatron(new Patron("Zakariya Raddaoui", "90603817", "98734581"));
+        }catch (SQLException sqlException){
+            System.out.println(sqlException.getMessage());
+            fail("An unexpected SQLException occured");
         }
     }
 
     @Test
-    void getBook() {
+    void getAllPatrons(){
         DatabaseManager.database();
-        String isbn = "67896777";
-        try {
-            Book book = BookManager.getBook(isbn);
-            if (book == null)
-                System.out.println("Book does not exist.");
-            else
-                System.out.println(book);
-            assert true;
-        } catch (SQLException sqlException) {
-            System.out.println("An unexpected SQLException occured.");
-            fail();
-        } finally {
-            DatabaseManager.closeConnection();
+        try{
+            ArrayList<Patron> patrons = PatronManager.getAllPatrons();
+            for (Patron patron : patrons){
+                System.out.println(patron);
+            }
+        }catch (SQLException sqlException){
+            System.out.println(sqlException.getMessage());
+            fail("An unexpected SQLException occured");
         }
     }
 }

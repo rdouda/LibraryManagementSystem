@@ -1,4 +1,4 @@
-package com.rdouda.librarymanagementsystem;
+package com.rdouda.core.library;
 
 public class Book {
     private int id;
@@ -6,7 +6,6 @@ public class Book {
     private String author;
     private String isbn;
     private int isTaken = 0;
-
     public Book(int id, String title, String author, String isbn, int isTaken){
         this.id = id;
         this.title = title;

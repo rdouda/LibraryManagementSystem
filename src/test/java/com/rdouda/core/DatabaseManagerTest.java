@@ -1,5 +1,8 @@
-package com.rdouda.librarymanagementsystem;
+package com.rdouda.core;
 
+import com.rdouda.core.database.BookManager;
+import com.rdouda.core.database.DatabaseManager;
+import com.rdouda.core.library.Book;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -12,11 +15,11 @@ class DatabaseManagerTest {
     void addBooks() {
         DatabaseManager.database();
         try{
-            DatabaseManager.addBook(new Book("The Catcher in the Rye", "J.D. Salinger", "12094443"));
-            DatabaseManager.addBook(new Book("1984", "George Orwell", "23567888"));
-            DatabaseManager.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "67896777"));
-            DatabaseManager.addBook(new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "456455544"));
-            DatabaseManager.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "345555532"));
+            BookManager.addBook(new Book("The Catcher in the Rye", "J.D. Salinger", "12094443"));
+            BookManager.addBook(new Book("1984", "George Orwell", "23567888"));
+            BookManager.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "67896777"));
+            BookManager.addBook(new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "456455544"));
+            BookManager.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "345555532"));
         } catch (SQLException sqlException){
             System.out.println(sqlException.getMessage());
             fail("An unexpected SQLException occured");
@@ -29,8 +32,8 @@ class DatabaseManagerTest {
     void removeAllBooks(){
         DatabaseManager.database();
         try {
-            DatabaseManager.removeAllBooks();
-            int booksCount = DatabaseManager.getBooks().size();
+            BookManager.removeAllBooks();
+            int booksCount = BookManager.getBooks().size();
             assertEquals(0 , booksCount);
         } catch (SQLException sqlException){
             System.out.println(sqlException.getMessage());
@@ -45,7 +48,7 @@ class DatabaseManagerTest {
         DatabaseManager.database();
         String isbn = "67896777";
         try {
-            Book book = DatabaseManager.getBook(isbn);
+            Book book = BookManager.getBook(isbn);
             if (book == null)
                 System.out.println("Book does not exist.");
             else

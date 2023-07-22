@@ -1,5 +1,8 @@
-package com.rdouda.librarymanagementsystem;
+package com.rdouda.core;
 
+import com.rdouda.core.database.BookManager;
+import com.rdouda.core.database.DatabaseManager;
+import com.rdouda.core.library.Book;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -52,7 +55,7 @@ public class ApplicationController {
             book.setAuthor(bookAuthor);
             book.setIsbn(isbn);
             try{
-                if(DatabaseManager.addBook(book))
+                if(BookManager.addBook(book))
                     messageLabel.setText("Book added successfully.");
                 else
                     messageLabel.setText("Book already exists.");
@@ -64,7 +67,7 @@ public class ApplicationController {
 
     public void removeBook(ActionEvent actionEvent) {
         try{
-            if(DatabaseManager.removeBook(isbnField.getText()))
+            if(BookManager.removeBook(isbnField.getText()))
                 messageLabel.setText("Book removed: " + isbnField.getText());
             else
                 messageLabel.setText("Book not found: " + isbnField.getText());
@@ -76,7 +79,7 @@ public class ApplicationController {
 
     public void getBooks(ActionEvent actionEvent) {
         try {
-            ArrayList<Book> books = DatabaseManager.getBooks();
+            ArrayList<Book> books = BookManager.getBooks();
             for(Book book : books){
                 System.out.println(book);
             }

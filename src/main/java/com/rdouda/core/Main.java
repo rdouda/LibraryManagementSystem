@@ -1,5 +1,6 @@
-package com.rdouda.librarymanagementsystem;
+package com.rdouda.core;
 
+import com.rdouda.core.database.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

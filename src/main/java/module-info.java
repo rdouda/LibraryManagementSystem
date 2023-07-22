@@ -5,6 +5,10 @@ module com.rdouda.librarymanagementsystem {
     requires org.xerial.sqlitejdbc;
 
 
-    opens com.rdouda.librarymanagementsystem to javafx.fxml;
-    exports com.rdouda.librarymanagementsystem;
+    opens com.rdouda.core to javafx.fxml;
+    exports com.rdouda.core;
+    exports com.rdouda.core.library;
+    opens com.rdouda.core.library to javafx.fxml;
+    exports com.rdouda.core.database;
+    opens com.rdouda.core.database to javafx.fxml;
 }
